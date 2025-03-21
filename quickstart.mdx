@@ -41,76 +41,70 @@ NEXT_PUBLIC_APPSLOTH_CLIENT_ID=your_client_id_here
 
 Add the AppSloth Provider at the root of your application to enable AppSloth functionality throughout your app.
 
-<Tabs>
-  <Tab title="Next.js App Router">
-    ```jsx
-    // app/layout.js or app/layout.tsx
-    import { AppSlothProvider } from 'appsloth/provider';
-    
-    export default function RootLayout({ children }) {
-      return (
-        <html lang="en">
-          <body>
-            <AppSlothProvider 
-              clientId={process.env.NEXT_PUBLIC_APPSLOTH_CLIENT_ID}
-              userEmail="user@example.com" // User's email for identification
-              customerId="project-123" // For business apps: project/workspace ID
-              // OR
-              // customerId="user-456" // For consumer apps: user ID
-            >
-              {children}
-            </AppSlothProvider>
-          </body>
-        </html>
-      );
-    }
-    ```
-  </Tab>
-  <Tab title="Next.js Pages Router">
-    ```jsx
-    // pages/_app.js or pages/_app.tsx
-    import { AppSlothProvider } from 'appsloth/provider';
-    
-    function MyApp({ Component, pageProps }) {
-      return (
+<CodeGroup>
+```jsx Next.js App Router {2,8-13,15}
+// app/layout.js or app/layout.tsx
+import { AppSlothProvider } from 'appsloth/provider';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
         <AppSlothProvider 
-          clientId={process.env.NEXT_PUBLIC_APPSLOTH_CLIENT_ID}
           userEmail="user@example.com" // User's email for identification
           customerId="project-123" // For business apps: project/workspace ID
           // OR
           // customerId="user-456" // For consumer apps: user ID
         >
-          <Component {...pageProps} />
+          {children}
         </AppSlothProvider>
-      );
-    }
-    
-    export default MyApp;
-    ```
-  </Tab>
-  <Tab title="React">
-    ```jsx
-    // src/App.jsx or src/App.tsx
-    import { AppSlothProvider } from 'appsloth/provider';
-    
-    function App() {
-      return (
-        <AppSlothProvider 
-          clientId={process.env.APPSLOTH_CLIENT_ID}
-          userEmail="user@example.com" // User's email for identification
-          customerId="project-123" // For business apps: project/workspace ID
-          // OR
-          // customerId="user-456" // For consumer apps: user ID
-        >
-          <YourApp />
-        </AppSlothProvider>
-      );
-    }
-    
-    export default App;
-    ```
-  </Tab>
-</Tabs>
+      </body>
+    </html>
+  );
+}
+```
+
+```jsx Next.js Pages Router {2,6-11,13}
+// pages/_app.js or pages/_app.tsx
+import { AppSlothProvider } from "appsloth/provider";
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <AppSlothProvider
+      userEmail="user@example.com" // User's email for identification
+      customerId="project-123" // For business apps: project/workspace ID
+      // OR
+      // customerId="user-456" // For consumer apps: user ID
+    >
+      <Component {...pageProps} />
+    </AppSlothProvider>
+  );
+}
+
+export default MyApp;
+```
+
+```jsx React {2,6-11,13}
+// src/App.jsx or src/App.tsx
+import { AppSlothProvider } from "appsloth/provider";
+
+function App() {
+  return (
+    <AppSlothProvider
+      userEmail="user@example.com" // User's email for identification
+      customerId="project-123" // For business apps: project/workspace ID
+      // OR
+      // customerId="user-456" // For consumer apps: user ID
+    >
+      <YourApp />
+    </AppSlothProvider>
+  );
+}
+
+export default App;
+```
+
+</CodeGroup>
 
 <Note>
   For business applications, use a project or workspace ID as the `customerId`.

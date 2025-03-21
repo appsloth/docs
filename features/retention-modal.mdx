@@ -1,0 +1,270 @@
+---
+title: "Retention Modal"
+description: "Add a customizable retention flow to reduce customer churn with AppSloth"
+---
+
+## Prerequisites
+
+Before using the AppSloth Retention Modal component, make sure you've:
+
+1. [Set up AppSloth](/quickstart) in your project
+2. Installed the required shadcn/ui components:
+
+```bash
+npx shadcn-ui@latest add button dialog
+```
+
+## Adding the Retention Modal Component
+
+The AppSloth Retention Modal component provides a customizable retention flow for your application. It includes features like multi-step feedback collection, custom offer presentation, and detailed analytics tracking.
+
+Adding the Retention Modal component to your application is straightforward:
+
+<CodeGroup>
+```jsx Next.js App Router
+import { RetentionModal } from 'appsloth/retention';
+
+export default function CancelSubscription() {
+  return (
+    <RetentionModal
+      customerId="customer-123"
+      onChurn={async () => {
+        // Handle the cancellation
+        await cancelSubscription();
+      }}
+      offer={{
+        title: "Special Offer",
+        description: "Get 50% off for the next 3 months!",
+        onOfferAccepted: async () => {
+          // Apply the discount
+          await applyDiscount();
+        }
+      }}
+    />
+  );
+}
+```
+
+```jsx React
+import { RetentionModal } from "appsloth/retention";
+
+function CancelSubscription() {
+  return (
+    <RetentionModal
+      customerId="customer-123"
+      onChurn={async () => {
+        // Handle the cancellation
+        await cancelSubscription();
+      }}
+      offer={{
+        title: "Special Offer",
+        description: "Get 50% off for the next 3 months!",
+        onOfferAccepted: async () => {
+          // Apply the discount
+          await applyDiscount();
+        },
+      }}
+    />
+  );
+}
+```
+
+</CodeGroup>
+
+<Note>
+  The Retention Modal is typically used in subscription management or account
+  settings pages where users might consider canceling their service.
+</Note>
+
+## How It Works
+
+The Retention Modal provides a comprehensive retention flow:
+
+1. **Feedback Collection**: Gathers user feedback through predefined options and free-form text
+2. **Retention Offer**: Optional step to present a special offer to retain the customer
+3. **Analytics Tracking**: Automatically tracks all retention-related events
+4. **Customizable UI**: Extensive styling and configuration options
+5. **Flexible Callbacks**: Custom handlers for feedback, offers, and cancellation
+
+```jsx
+import { RetentionModal } from 'appsloth/retention';
+
+// Basic implementation
+<RetentionModal
+  customerId="customer-123"
+  onChurn={() => handleCancellation()}
+/>
+
+// Customized implementation with offer
+<RetentionModal
+  customerId="customer-123"
+  buttonText="Cancel Subscription"
+  feedbackTitle="We'd Hate to See You Go"
+  onChurn={() => handleCancellation()}
+  onSubmitFeedback={(feedback) => logFeedback(feedback)}
+  offer={{
+    title: "Special Offer",
+    description: "Stay with us and get 50% off!",
+    onOfferAccepted: () => applyDiscount()
+  }}
+/>
+```
+
+## Customization Options
+
+The Retention Modal component is highly customizable through props:
+
+### Button Customization
+
+Customize the trigger button:
+
+```jsx
+<RetentionModal
+  buttonText="Cancel Plan"
+  buttonClassName="my-custom-button"
+  buttonVariant="outline"
+  customerId="customer-123"
+  onChurn={() => handleCancellation()}
+/>
+```
+
+### Feedback Page Customization
+
+Customize the feedback collection page:
+
+```jsx
+<RetentionModal
+  feedbackTitle="Sorry to See You Go"
+  feedbackDescription="Help us improve our service"
+  feedbackOptions={[
+    "Too expensive",
+    "Missing features",
+    "Not using enough",
+    "Found alternative",
+  ]}
+  feedbackTextareaPlaceholder="Tell us more..."
+  feedbackContinueButtonText="Next"
+  feedbackCancelButtonText="Go Back"
+  customerId="customer-123"
+  onChurn={() => handleCancellation()}
+/>
+```
+
+### Offer Page Customization
+
+Configure the retention offer page:
+
+```jsx
+<RetentionModal
+  customerId="customer-123"
+  onChurn={() => handleCancellation()}
+  offer={{
+    title: "Wait! Special Offer Just for You",
+    description: "Get 3 months at 50% off",
+    acceptButtonText: "Accept Offer",
+    cancelButtonText: "No Thanks",
+    acceptButtonClassName: "custom-accept",
+    cancelButtonClassName: "custom-cancel",
+    acceptButtonVariant: "default",
+    cancelButtonVariant: "outline",
+    onOfferAccepted: () => handleOfferAcceptance(),
+  }}
+/>
+```
+
+### Custom Event Handling
+
+Implement custom handlers for various events:
+
+```jsx
+<RetentionModal
+  customerId="customer-123"
+  onChurn={async () => {
+    // Handle final cancellation
+    await cancelSubscription();
+    await logCancellation();
+  }}
+  onSubmitFeedback={async (feedback) => {
+    // Handle feedback submission
+    await saveFeedback(feedback);
+    await notifyTeam(feedback);
+  }}
+  offer={{
+    title: "Special Offer",
+    description: "50% off for 3 months",
+    onOfferAccepted: async () => {
+      // Handle offer acceptance
+      await applyDiscount();
+      await updateBilling();
+    },
+  }}
+/>
+```
+
+## Component Props
+
+| Prop                              | Type                                          | Default                        | Description                       |
+| --------------------------------- | --------------------------------------------- | ------------------------------ | --------------------------------- |
+| `buttonText`                      | `string`                                      | "Cancel"                       | Text for the trigger button       |
+| `buttonClassName`                 | `string`                                      | ""                             | Additional classes for the button |
+| `buttonVariant`                   | `"default" \| "outline" \| "ghost" \| "link"` | "outline"                      | Button variant style              |
+| `customerId`                      | `string`                                      | Required                       | The customer ID                   |
+| `feedbackTitle`                   | `string`                                      | "We're Sorry to See You Go"    | Title for feedback page           |
+| `feedbackDescription`             | `string`                                      | "Please help us understand..." | Description for feedback page     |
+| `feedbackOptions`                 | `string[]`                                    | [Default options]              | Array of feedback options         |
+| `feedbackTextareaPlaceholder`     | `string`                                      | "Any additional feedback?"     | Placeholder for feedback textarea |
+| `feedbackTextareaClassName`       | `string`                                      | ""                             | Additional classes for textarea   |
+| `feedbackContinueButtonText`      | `string`                                      | "Continue"                     | Text for continue button          |
+| `feedbackCancelButtonText`        | `string`                                      | "Cancel"                       | Text for cancel button            |
+| `feedbackContinueButtonClassName` | `string`                                      | ""                             | Classes for continue button       |
+| `feedbackCancelButtonClassName`   | `string`                                      | ""                             | Classes for cancel button         |
+| `feedbackContinueButtonVariant`   | `ButtonVariant`                               | "default"                      | Continue button variant           |
+| `feedbackCancelButtonVariant`     | `ButtonVariant`                               | "outline"                      | Cancel button variant             |
+| `offer`                           | `OfferDetails`                                | undefined                      | Configuration for retention offer |
+| `onChurn`                         | `() => void`                                  | Required                       | Callback when user churns         |
+| `onSubmitFeedback`                | `(feedback: string) => void`                  | undefined                      | Callback for feedback submission  |
+
+## Viewing Retention Analytics
+
+All retention-related events are tracked and can be analyzed in your AppSloth Dashboard:
+
+1. Log into your [AppSloth Dashboard](https://dashboard.appsloth.com)
+2. Navigate to the "Retention" section
+3. Analyze your retention metrics:
+   - View churn rates
+   - Analyze feedback patterns
+   - Track offer acceptance rates
+   - Monitor retention effectiveness
+
+<img
+  src="/images/retention-dashboard.png"
+  alt="AppSloth Retention Dashboard"
+  className="rounded-lg border border-zinc-200 dark:border-zinc-700"
+/>
+
+## Next Steps
+
+Now that you've added the AppSloth Retention Modal to your application, explore more features:
+
+<CardGroup>
+  <Card title="Customer Feedback" icon="comments" href="/features/feedback">
+    Learn how to collect and analyze customer feedback.
+  </Card>
+  <Card
+    title="Advanced Customization"
+    icon="paint-brush"
+    href="/customization/components"
+  >
+    Deeply customize AppSloth components to match your brand.
+  </Card>
+  <Card
+    title="Analytics & Reporting"
+    icon="chart-line"
+    href="/features/analytics"
+  >
+    Get insights from your retention data.
+  </Card>
+  <Card title="Retention Strategies" icon="users" href="/guides/retention">
+    Learn best practices for customer retention.
+  </Card>
+</CardGroup>{" "}

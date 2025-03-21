@@ -13,82 +13,70 @@ The AppSloth Banner component allows you to display important messages to your u
 
 Adding the Banner component to your application is simple:
 
-<Tabs>
-  <Tab title="Next.js App Router">
-    ```jsx
-    // app/layout.js or app/layout.tsx
-    import { AppSlothProvider } from 'appsloth/provider';
-    import { Banner } from 'appsloth/banner';
-    
-    export default function RootLayout({ children }) {
-      return (
-        <html lang="en">
-          <body>
-            <AppSlothProvider 
-              clientId={process.env.NEXT_PUBLIC_APPSLOTH_CLIENT_ID}
-              userEmail="user@example.com"
-              customerId="project-123"
-            >
-              <main className="flex w-full flex-col">
-                <Banner />
-                {children}
-              </main>
-            </AppSlothProvider>
-          </body>
-        </html>
-      );
-    }
-    ```
-  </Tab>
-  <Tab title="Next.js Pages Router">
-    ```jsx
-    // pages/_app.js or pages/_app.tsx
-    import { AppSlothProvider } from 'appsloth/provider';
-    import { Banner } from 'appsloth/banner';
-    
-    function MyApp({ Component, pageProps }) {
-      return (
+<CodeGroup>
+```jsx Next.js App Router {3,14}
+// app/layout.js or app/layout.tsx
+import { AppSlothProvider } from 'appsloth/provider';
+import { Banner } from 'appsloth/banner';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
         <AppSlothProvider 
-          clientId={process.env.NEXT_PUBLIC_APPSLOTH_CLIENT_ID}
           userEmail="user@example.com"
           customerId="project-123"
         >
           <main className="flex w-full flex-col">
             <Banner />
-            <Component {...pageProps} />
+            {children}
           </main>
         </AppSlothProvider>
-      );
-    }
-    
-    export default MyApp;
-    ```
-  </Tab>
-  <Tab title="React">
-    ```jsx
-    // src/App.jsx or src/App.tsx
-    import { AppSlothProvider } from 'appsloth/provider';
-    import { Banner } from 'appsloth/banner';
-    
-    function App() {
-      return (
-        <AppSlothProvider 
-          clientId={process.env.APPSLOTH_CLIENT_ID}
-          userEmail="user@example.com"
-          customerId="project-123"
-        >
-          <main className="flex w-full flex-col">
-            <Banner />
-            <YourApp />
-          </main>
-        </AppSlothProvider>
-      );
-    }
-    
-    export default App;
-    ```
-  </Tab>
-</Tabs>
+      </body>
+    </html>
+  );
+}
+```
+
+```jsx Next.js Pages Router {3,9}
+// pages/_app.js or pages/_app.tsx
+import { AppSlothProvider } from "appsloth/provider";
+import { Banner } from "appsloth/banner";
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <AppSlothProvider userEmail="user@example.com" customerId="project-123">
+      <main className="flex w-full flex-col">
+        <Banner />
+        <Component {...pageProps} />
+      </main>
+    </AppSlothProvider>
+  );
+}
+
+export default MyApp;
+```
+
+```jsx React {3,9}
+// src/App.jsx or src/App.tsx
+import { AppSlothProvider } from "appsloth/provider";
+import { Banner } from "appsloth/banner";
+
+function App() {
+  return (
+    <AppSlothProvider userEmail="user@example.com" customerId="project-123">
+      <main className="flex w-full flex-col">
+        <Banner />
+        <YourApp />
+      </main>
+    </AppSlothProvider>
+  );
+}
+
+export default App;
+```
+
+</CodeGroup>
 
 <Note>
   Position your Banner component strategically for optimal user visibility. The

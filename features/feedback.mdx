@@ -1,0 +1,256 @@
+---
+title: "Feedback"
+description: "Add a customizable feedback dialog to your application with AppSloth"
+---
+
+## Prerequisites
+
+Before using the AppSloth Feedback component, make sure you've:
+
+1. [Set up AppSloth](/quickstart) in your project
+2. Installed the required shadcn/ui components:
+
+```bash
+npx shadcn-ui@latest add dialog button
+```
+
+## Adding the Feedback Component
+
+The AppSloth Feedback component provides a customizable dialog for collecting user feedback and ratings. It integrates seamlessly with your application and includes emoji-based ratings, text feedback, and customizable styling.
+
+Adding the Feedback component to your application is straightforward:
+
+<CodeGroup>
+```jsx Next.js App Router {3,14}
+// app/layout.js or app/layout.tsx
+import { AppSlothProvider } from 'appsloth/provider';
+import { FeedbackButton } from 'appsloth/feedback';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <AppSlothProvider 
+          userEmail="user@example.com"
+          customerId="project-123"
+        >
+          <main className="flex w-full flex-col">
+            <FeedbackButton />
+            {children}
+          </main>
+        </AppSlothProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```jsx Next.js Pages Router {3,9}
+// pages/_app.js or pages/_app.tsx
+import { AppSlothProvider } from "appsloth/provider";
+import { FeedbackButton } from "appsloth/feedback";
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <AppSlothProvider userEmail="user@example.com" customerId="project-123">
+      <main className="flex w-full flex-col">
+        <FeedbackButton />
+        <Component {...pageProps} />
+      </main>
+    </AppSlothProvider>
+  );
+}
+
+export default MyApp;
+```
+
+```jsx React {3,9}
+// src/App.jsx or src/App.tsx
+import { AppSlothProvider } from "appsloth/provider";
+import { FeedbackButton } from "appsloth/feedback";
+
+function App() {
+  return (
+    <AppSlothProvider userEmail="user@example.com" customerId="project-123">
+      <main className="flex w-full flex-col">
+        <FeedbackButton />
+        <YourApp />
+      </main>
+    </AppSlothProvider>
+  );
+}
+
+export default App;
+```
+
+</CodeGroup>
+
+<Note>
+  Position your FeedbackButton component where it's easily accessible to users.
+  Common placements include the navigation bar, footer, or floating in the
+  bottom-right corner of the page.
+</Note>
+
+## How It Works
+
+The Feedback component provides a comprehensive way to collect user feedback:
+
+1. **Easy Integration**: Drop-in component that handles all feedback collection logic
+2. **Emoji Ratings**: Built-in emoji-based rating system (customizable)
+3. **Text Feedback**: Optional text input for detailed feedback
+4. **Automatic Submission**: Handles submission to AppSloth's servers
+5. **Customizable UI**: Extensive styling and configuration options
+6. **Path Tracking**: Automatically tracks which page the feedback was submitted from
+
+```jsx
+import { FeedbackButton } from 'appsloth/feedback';
+
+// Basic implementation
+<FeedbackButton />
+
+// Customized implementation
+<FeedbackButton
+  dialogTitle="We'd Love Your Feedback"
+  dialogDescription="Help us improve by sharing your thoughts"
+  showRatings={true}
+  requireFeedbackOrRating={true}
+/>
+```
+
+## Customization Options
+
+The FeedbackButton component is highly customizable through props:
+
+### Button Customization
+
+You can customize the appearance and behavior of all buttons:
+
+```jsx
+<FeedbackButton
+  triggerButton={{
+    text: "Give Feedback",
+    variant: "default",
+    className: "my-custom-class",
+  }}
+  submitButton={{
+    text: "Send Feedback",
+    variant: "primary",
+    className: "submit-button",
+  }}
+  cancelButton={{
+    text: "Close",
+    variant: "outline",
+    className: "cancel-button",
+  }}
+/>
+```
+
+### Dialog Customization
+
+Customize the feedback dialog's appearance and content:
+
+```jsx
+<FeedbackButton
+  dialogTitle="Share Your Thoughts"
+  dialogDescription="Your feedback helps us improve"
+  dialogClassName="custom-dialog"
+  textareaPlaceholder="Tell us what you think..."
+  textareaClassName="custom-textarea"
+  textareaMinHeight={150}
+/>
+```
+
+### Rating System Customization
+
+You can customize the rating system or disable it entirely:
+
+```jsx
+<FeedbackButton
+  showRatings={true}
+  ratingItems={[
+    { display: "😡", score: 1, tooltip: "Very Dissatisfied" },
+    { display: "😕", score: 2, tooltip: "Dissatisfied" },
+    { display: "😐", score: 3, tooltip: "Neutral" },
+    { display: "🙂", score: 4, tooltip: "Satisfied" },
+    { display: "😍", score: 5, tooltip: "Very Satisfied" },
+  ]}
+  ratingsClassName="custom-ratings"
+/>
+```
+
+### Submission Behavior
+
+Control how feedback is submitted and validated:
+
+```jsx
+<FeedbackButton
+  requireFeedbackOrRating={true}
+  successMessage="Thanks for your feedback!"
+  onFeedbackSubmit={(feedback, score) => {
+    console.log("Feedback:", feedback, "Score:", score);
+  }}
+  disableDefaultSubmit={false}
+/>
+```
+
+## Component Props
+
+| Prop                      | Type                                         | Default                                         | Description                                       |
+| ------------------------- | -------------------------------------------- | ----------------------------------------------- | ------------------------------------------------- |
+| `triggerButton`           | `ButtonConfig`                               | `{ text: "Give Feedback", variant: "default" }` | Configuration for the trigger button              |
+| `submitButton`            | `ButtonConfig`                               | `{ text: "Submit", variant: "default" }`        | Configuration for the submit button               |
+| `cancelButton`            | `ButtonConfig`                               | `{ text: "Cancel", variant: "outline" }`        | Configuration for the cancel button               |
+| `dialogTitle`             | `string`                                     | "Submit Feedback"                               | Title of the feedback dialog                      |
+| `dialogDescription`       | `string`                                     | "Share your thoughts and help us improve."      | Description text in the dialog                    |
+| `ratingItems`             | `RatingItem[]`                               | Default emoji ratings                           | Custom rating items configuration                 |
+| `requireFeedbackOrRating` | `boolean`                                    | `true`                                          | Whether to require either feedback text or rating |
+| `showRatings`             | `boolean`                                    | `true`                                          | Whether to show the rating system                 |
+| `textareaPlaceholder`     | `string`                                     | "Share your feedback... (optional)"             | Placeholder text for the feedback textarea        |
+| `textareaClassName`       | `string`                                     | ""                                              | Additional class names for the textarea           |
+| `textareaMinHeight`       | `number`                                     | 100                                             | Minimum height of the textarea in pixels          |
+| `successMessage`          | `string`                                     | "Feedback submitted successfully"               | Success message shown after submission            |
+| `onFeedbackSubmit`        | `(feedback: string, score?: number) => void` | undefined                                       | Optional callback when feedback is submitted      |
+| `disableDefaultSubmit`    | `boolean`                                    | `false`                                         | If true, disables the default fetch behavior      |
+| `dialogClassName`         | `string`                                     | ""                                              | Additional class names for the dialog content     |
+| `ratingsClassName`        | `string`                                     | ""                                              | Additional class names for the ratings container  |
+
+## Viewing Feedback in the Dashboard
+
+All submitted feedback is automatically collected and can be viewed in your AppSloth Dashboard:
+
+1. Log into your [AppSloth Dashboard](https://dashboard.appsloth.com)
+2. Navigate to the "Feedback" section
+3. View and analyze feedback data:
+   - Filter by date range
+   - Sort by rating score
+   - Export feedback data
+   - View feedback trends and patterns
+
+<img
+  src="/images/feedback-dashboard.png"
+  alt="AppSloth Feedback Dashboard"
+  className="rounded-lg border border-zinc-200 dark:border-zinc-700"
+/>
+
+## Next Steps
+
+Now that you've added AppSloth Feedback to your application, explore more features:
+
+<CardGroup>
+  <Card title="Analytics" icon="chart-line" href="/analytics/feedback">
+    Learn how to analyze feedback patterns and trends.
+  </Card>
+  <Card
+    title="Advanced Customization"
+    icon="paint-brush"
+    href="/customization/components"
+  >
+    Deeply customize AppSloth components to match your brand.
+  </Card>
+  <Card title="User Segmentation" icon="users" href="/analytics/segmentation">
+    Analyze feedback by user segments.
+  </Card>
+  <Card title="Internationalization" icon="globe" href="/customization/i18n">
+    Translate feedback components for international audiences.
+  </Card>
+</CardGroup>

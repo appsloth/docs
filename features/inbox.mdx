@@ -1,0 +1,266 @@
+---
+title: "Inbox"
+description: "Add a customizable notification inbox to your application with AppSloth"
+---
+
+## Prerequisites
+
+Before using the AppSloth Inbox component, make sure you've:
+
+1. [Set up AppSloth](/quickstart) in your project
+2. Installed the required shadcn/ui components:
+
+```bash
+npx shadcn-ui@latest add button dropdown-menu badge input tabs
+```
+
+## Adding the Inbox Component
+
+The AppSloth Inbox component provides a customizable notification center for your application. It includes features like real-time notifications, tabbed interface for new and archived notifications, search functionality, and customizable styling.
+
+Adding the Inbox component to your application is straightforward:
+
+<CodeGroup>
+```jsx Next.js App Router {3,14}
+// app/layout.js or app/layout.tsx
+import { AppSlothProvider } from 'appsloth/provider';
+import { Inbox } from 'appsloth/inbox';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <AppSlothProvider 
+          userEmail="user@example.com"
+          customerId="project-123"
+        >
+          <main className="flex w-full flex-col">
+            <Inbox />
+            {children}
+          </main>
+        </AppSlothProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+```jsx Next.js Pages Router {3,9}
+// pages/_app.js or pages/_app.tsx
+import { AppSlothProvider } from "appsloth/provider";
+import { Inbox } from "appsloth/inbox";
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <AppSlothProvider userEmail="user@example.com" customerId="project-123">
+      <main className="flex w-full flex-col">
+        <Inbox />
+        <Component {...pageProps} />
+      </main>
+    </AppSlothProvider>
+  );
+}
+
+export default MyApp;
+```
+
+```jsx React {3,9}
+// src/App.jsx or src/App.tsx
+import { AppSlothProvider } from "appsloth/provider";
+import { Inbox } from "appsloth/inbox";
+
+function App() {
+  return (
+    <AppSlothProvider userEmail="user@example.com" customerId="project-123">
+      <main className="flex w-full flex-col">
+        <Inbox />
+        <YourApp />
+      </main>
+    </AppSlothProvider>
+  );
+}
+
+export default App;
+```
+
+</CodeGroup>
+
+<Note>
+  Position your Inbox component where it's easily accessible to users. Common
+  placements include the navigation bar or header area, typically aligned to the
+  right side.
+</Note>
+
+## How It Works
+
+The Inbox component provides a comprehensive notification system:
+
+1. **Real-time Updates**: Automatically polls for new notifications
+2. **Tabbed Interface**: Separate tabs for new and archived notifications
+3. **Search Functionality**: Search through archived notifications
+4. **Unread Badges**: Visual indicator for unread notifications
+5. **Customizable UI**: Extensive styling and configuration options
+6. **Timestamp Display**: Configurable timestamp formatting
+
+```jsx
+import { Inbox } from 'appsloth/inbox';
+
+// Basic implementation
+<Inbox />
+
+// Customized implementation
+<Inbox
+  menuWidth={400}
+  maxHeight={400}
+  showSearch={true}
+  showTimestamps={true}
+  timestampFormat="relative"
+  pollingInterval={60000}
+/>
+```
+
+## Customization Options
+
+The Inbox component is highly customizable through props:
+
+### Button and Badge Customization
+
+Customize the trigger button and unread badge:
+
+```jsx
+import { Bell } from "lucide-react";
+
+<Inbox
+  triggerButton={{
+    icon: <Bell className="h-5 w-5" />,
+    variant: "ghost",
+    size: "icon",
+    className: "my-custom-class",
+  }}
+  unreadBadge={{
+    variant: "destructive",
+    position: { top: "-1px", right: "-1px" },
+    className: "badge-custom",
+  }}
+/>;
+```
+
+### Tab Customization
+
+Customize the tabs for new and archived notifications:
+
+```jsx
+<Inbox
+  newTab={{
+    label: "Unread",
+    className: "custom-tab",
+  }}
+  archiveTab={{
+    label: "History",
+    className: "custom-tab",
+  }}
+  dropdownClassName="custom-dropdown"
+/>
+```
+
+### Search and Empty States
+
+Configure search behavior and empty state messages:
+
+```jsx
+<Inbox
+  showSearch={true}
+  searchPlaceholder="Search notifications..."
+  emptyNewMessage="No new notifications"
+  emptyArchivedMessage="No archived notifications"
+  emptySearchMessage="No matching notifications"
+/>
+```
+
+### Custom Notification Rendering
+
+Provide custom rendering for notification items:
+
+```jsx
+<Inbox
+  renderNotificationItem={(notification) => (
+    <div className="custom-notification">
+      <h4>{notification.title}</h4>
+      <p>{notification.description}</p>
+      <span>{notification.createdAt}</span>
+    </div>
+  )}
+  onNotificationClick={(notification) => {
+    console.log("Clicked:", notification);
+  }}
+/>
+```
+
+## Component Props
+
+| Prop                        | Type                                              | Default                                                                | Description                                      |
+| --------------------------- | ------------------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------ |
+| `triggerButton`             | `ButtonConfig`                                    | `{ icon: <Bell />, variant: "ghost", size: "icon" }`                   | Configuration for the trigger button             |
+| `unreadBadge`               | `BadgeConfig`                                     | `{ variant: "destructive", position: { top: "-1px", right: "-1px" } }` | Configuration for the unread count badge         |
+| `newTab`                    | `TabConfig`                                       | `{ label: "New" }`                                                     | Configuration for the new notifications tab      |
+| `archiveTab`                | `TabConfig`                                       | `{ label: "Archive" }`                                                 | Configuration for the archived notifications tab |
+| `menuWidth`                 | `number`                                          | 400                                                                    | Width of the dropdown menu in pixels             |
+| `maxHeight`                 | `number`                                          | 400                                                                    | Maximum height of the notification list          |
+| `showSearch`                | `boolean`                                         | true                                                                   | Whether to show the search input in archive      |
+| `searchPlaceholder`         | `string`                                          | "Search archived notifications..."                                     | Placeholder text for search input                |
+| `markAllAsReadText`         | `string`                                          | "Mark all as read"                                                     | Text for the mark all as read button             |
+| `emptyNewMessage`           | `string`                                          | "No new notifications"                                                 | Message shown when no new notifications          |
+| `emptyArchivedMessage`      | `string`                                          | "No archived notifications"                                            | Message shown when no archived notifications     |
+| `emptySearchMessage`        | `string`                                          | "No matching notifications"                                            | Message shown when search has no results         |
+| `pollingInterval`           | `number`                                          | 60000                                                                  | Interval for checking new notifications (ms)     |
+| `notificationItemClassName` | `string`                                          | ""                                                                     | Additional classes for notification items        |
+| `showTimestamps`            | `boolean`                                         | true                                                                   | Whether to show timestamps                       |
+| `timestampFormat`           | `"relative" \| "absolute"`                        | "relative"                                                             | Format for displaying timestamps                 |
+| `renderNotificationItem`    | `(notification: Notification) => React.ReactNode` | undefined                                                              | Custom renderer for notifications                |
+| `onNotificationClick`       | `(notification: Notification) => void`            | undefined                                                              | Callback when notification is clicked            |
+| `dropdownClassName`         | `string`                                          | ""                                                                     | Additional classes for dropdown content          |
+
+## Viewing Notifications in the Dashboard
+
+All notifications can be managed and analyzed in your AppSloth Dashboard:
+
+1. Log into your [AppSloth Dashboard](https://dashboard.appsloth.com)
+2. Navigate to the "Notifications" section
+3. Manage your notifications:
+   - Create new notifications
+   - View delivery statistics
+   - Analyze engagement metrics
+   - Configure notification rules
+
+<img
+  src="/images/notifications-dashboard.png"
+  alt="AppSloth Notifications Dashboard"
+  className="rounded-lg border border-zinc-200 dark:border-zinc-700"
+/>
+
+## Next Steps
+
+Now that you've added AppSloth Inbox to your application, explore more features:
+
+<CardGroup>
+  <Card
+    title="Push Notifications"
+    icon="bell"
+    href="/features/push-notifications"
+  >
+    Learn how to enable browser push notifications.
+  </Card>
+  <Card
+    title="Advanced Customization"
+    icon="paint-brush"
+    href="/customization/components"
+  >
+    Deeply customize AppSloth components to match your brand.
+  </Card>
+  <Card title="User Targeting" icon="users" href="/features/targeting">
+    Target notifications to specific user segments.
+  </Card>
+  <Card title="Internationalization" icon="globe" href="/customization/i18n">
+    Translate notifications for international audiences.
+  </Card>
+</CardGroup>

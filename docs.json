@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Appsloth",
   "colors": {
     "primary": "#f2994a",
     "light": "#f2994a",
@@ -12,7 +12,7 @@
       "light": "#FFFBF5"
     }
   },
-  "favicon": "/logo/light.svg",
+  "favicon": "/logo/light.png",
   "navigation": {
     "tabs": [
       {
@@ -28,7 +28,7 @@
               "features/banners",
               "features/feedback",
               "features/inbox",
-              "features/retention",
+              "features/retention-modal",
               "features/integrations",
               "features/status-page",
               "features/testimonials"
@@ -62,7 +62,7 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
+    "light": "/logo/light.png",
     "dark": "/logo/dark.svg"
   },
   "navbar": {
