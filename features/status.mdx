@@ -1,0 +1,122 @@
+---
+title: "Status Page"
+description: "Monitor your endpoints and communicate service status with AppSloth Status Pages"
+---
+
+## Overview
+
+AppSloth Status Pages provide real-time monitoring of your endpoints and a public-facing status page for your customers. The system automatically checks your endpoints every 5 minutes and maintains an uptime history, making it easy to communicate service status to your users.
+
+## Setting Up Endpoints
+
+Through the AppSloth Dashboard, you can easily configure endpoints to monitor. Each endpoint can be configured with:
+
+| Configuration       | Description                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------ |
+| `Name`              | A display name for the endpoint (e.g., "API Health Check", "Authentication Service") |
+| `Scheme`            | Choose between HTTP or HTTPS                                                         |
+| `Hostname`          | The host to monitor (e.g., "api.example.com")                                        |
+| `Path`              | The specific path to check (e.g., "/health", "/status")                              |
+| `Port`              | Optional port number if not using standard HTTP/HTTPS ports                          |
+| `Public Visibility` | Whether this endpoint should be visible on your public status page                   |
+| `Authentication`    | Optional bearer token authentication for secured endpoints                           |
+
+### Best Practices for Endpoints
+
+When setting up your endpoints:
+
+1. **Health Check Endpoints**: Create dedicated health check endpoints that return a 200 status code
+2. **Response Time**: Keep your health check endpoints lightweight to ensure accurate monitoring
+3. **Authentication**: Use bearer token authentication for sensitive endpoints
+4. **Public vs Private**: Only make endpoints public that are relevant to your customers
+5. **Meaningful Names**: Use descriptive names that your customers will understand
+
+## Public Status Page
+
+Each project automatically gets a public status page at `https://status.appsloth.com/[project-id]`. Your status page includes:
+
+- Real-time status of all public endpoints
+- 90-day uptime history
+- Current incident information
+- Historical incident records
+
+### Customization Options
+
+Through the dashboard, you can customize your status page:
+
+1. **Branding**
+
+   - Add your company logo
+   - Set custom colors to match your brand
+   - Add a custom domain (Enterprise plan)
+
+2. **Component Groups**
+
+   - Group related endpoints together
+   - Create logical service categories
+   - Set custom labels for each group
+
+3. **Metrics Display**
+   - Configure which metrics to show
+   - Set custom thresholds for status indicators
+   - Choose between percentage or time-based uptime display
+
+## Incident Management
+
+When issues occur, you can create incidents through the dashboard. Each incident can:
+
+- Be linked to specific affected endpoints
+- Include status updates over time
+- Show investigation progress
+- Provide resolution details
+
+The status page automatically updates to reflect current incidents and their status.
+
+## Monitoring Dashboard
+
+The AppSloth Dashboard provides comprehensive monitoring information:
+
+1. Log into your [AppSloth Dashboard](https://dashboard.appsloth.com)
+2. Navigate to the "Status" section
+3. View your endpoints:
+   - Current status indicators
+   - Uptime percentages
+   - Response time graphs
+   - Incident history
+
+<img
+  src="/images/status-dashboard.png"
+  alt="AppSloth Status Dashboard"
+  className="rounded-lg border border-zinc-200 dark:border-zinc-700"
+/>
+
+## Notifications
+
+Configure alert notifications in the dashboard when:
+
+- Endpoints go down
+- Response times exceed thresholds
+- New incidents are created
+- Incident updates are posted
+
+Notifications can be sent via:
+
+- Email
+- Slack
+- Webhooks
+
+## Next Steps
+
+Now that you've set up your status page, explore more features:
+
+<CardGroup cols={1}>
+  <Card title="Inbox" icon="inbox" href="/features/inbox">
+    Add a notification inbox to your application
+  </Card>
+  <Card title="Banners" icon="flag" href="/features/banners">
+    Create eye-catching banners for important announcements
+  </Card>
+  <Card title="Feedback" icon="comments" href="/features/feedback">
+    Collect and manage user feedback
+  </Card>
+</CardGroup>

@@ -28,7 +28,8 @@
               "features/banners",
               "features/feedback",
               "features/inbox",
-              "features/retention-modal"
+              "features/retention-modal",
+              "features/status"
             ]
           }
         ]
