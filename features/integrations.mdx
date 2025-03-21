@@ -1,0 +1,116 @@
+---
+title: "Integrations"
+description: "Add third-party integrations to your app in minutes with AppSloth's OAuth service"
+---
+
+<Note>
+  This feature is in active development. More integrations and capabilities
+  coming soon!
+</Note>
+
+## Overview
+
+Adding OAuth integrations to your application is complex and time-consuming. AppSloth's OAuth service handles everything from secure credential storage to user authentication flows, with pre-built components that handle the entire connection experience.
+
+## Supported Integrations
+
+AppSloth currently supports Slack, GitHub, and Linear integrations, with more platforms coming soon based on customer demand.
+
+## How It Works
+
+Set up your OAuth credentials in AppSloth, drop in our pre-built components, and start interacting with connected services through our SDK. All credentials are encrypted and automatically rotated for security.
+
+## Setting Up
+
+### 1. Add Provider Credentials
+
+Add your OAuth credentials in the AppSloth Dashboard:
+
+| Setting         | Description                    |
+| --------------- | ------------------------------ |
+| `Provider`      | Select the integration         |
+| `Client ID`     | Your OAuth app's client ID     |
+| `Client Secret` | Your OAuth app's client secret |
+| `Scopes`        | Required permission scopes     |
+
+### 2. Add the Connect Component
+
+Our pre-built components handle the entire integration experience:
+
+```jsx
+// For Slack
+<ConnectSlack customerId="user-123" />
+
+// For Linear
+<ConnectLinear customerId="user-123" />
+```
+
+The components provide a complete user experience: connection button, OAuth flow, workspace configuration, and integration testing. Users can connect their accounts and verify the integration works in minutes.
+
+## Using Connected Services
+
+Interact with connected services through our simple SDK:
+
+```typescript
+// Send messages to Slack
+await appsloth.slack.sendMessage({
+  customerId: "user-123",
+  message: "Hello from AppSloth!",
+});
+
+// Create Linear issues
+await appsloth.linear.createIssue({
+  customerId: "user-123",
+  title: "New feature request",
+  description: "User requested...",
+});
+```
+
+## Integration Dashboard
+
+Monitor and manage your integrations through the AppSloth Dashboard. View active connections, track usage, and manage permissions all in one place.
+
+## Coming Soon
+
+We're actively working on expanding the integration platform:
+
+### More Providers
+
+Support for popular services like Discord, Notion, and Jira, allowing you to connect with all your users' favorite tools.
+
+### Advanced Management
+
+- Usage analytics and health monitoring
+- Bulk operations for managing multiple connections
+- Custom webhook configuration
+- Automated connection testing
+
+### Developer Experience
+
+- Customizable UI components
+- Webhook event handling
+- Integration status callbacks
+- Detailed connection logs
+
+### Enterprise Features
+
+- Audit logs for security compliance
+- Custom OAuth scopes
+- IP allowlisting
+- SSO integration
+
+## Next Steps
+
+Now that you've added integrations, explore more features:
+
+<CardGroup cols={1}>
+  <Card title="Status Page" icon="signal" href="/features/status">
+    Create a real-time status page for your services
+  </Card>
+  <Card title="Testimonials" icon="quote" href="/features/testimonials">
+    Collect and showcase customer testimonials
+  </Card>
+  <Card title="Inbox" icon="inbox" href="/features/inbox">
+    Add a notification inbox to your application
+  </Card>
+</CardGroup>{" "}

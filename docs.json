@@ -29,7 +29,9 @@
               "features/feedback",
               "features/inbox",
               "features/retention-modal",
-              "features/status"
+              "features/status",
+              "features/testimonials",
+              "features/integrations"
             ]
           }
         ]
