@@ -3,11 +3,16 @@
   "theme": "mint",
   "name": "Mint Starter Kit",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#f2994a",
+    "light": "#f2994a",
+    "dark": "#f2994a"
   },
-  "favicon": "/favicon.svg",
+  "background": {
+    "color": {
+      "light": "#FFFBF5"
+    }
+  },
+  "favicon": "/logo/light.svg",
   "navigation": {
     "tabs": [
       {
@@ -15,41 +20,27 @@
         "groups": [
           {
             "group": "Get Started",
+            "pages": ["introduction", "quickstart"]
+          },
+          {
+            "group": "Features",
             "pages": [
-              "introduction",
-              "quickstart",
-              "development"
+              "features/banners",
+              "features/feedback",
+              "features/inbox",
+              "features/retention",
+              "features/integrations",
+              "features/status-page",
+              "features/testimonials"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "SDK",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "API Documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "sdk/introduction",
+              "sdk/events",
+              "sdk/notification",
+              "sdk/integrations"
             ]
           }
         ]
@@ -58,18 +49,13 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
           "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "href": "https://appsloth.com/community",
+          "icon": "discord"
         },
         {
           "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
+          "href": "https://appsloth.com/blog",
           "icon": "newspaper"
         }
       ]
@@ -89,7 +75,7 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://appsloth.com/app"
     }
   },
   "footer": {

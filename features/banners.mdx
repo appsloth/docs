@@ -1,0 +1,241 @@
+---
+title: "Banners"
+description: "Add informational banners to your application with AppSloth"
+---
+
+## Prerequisites
+
+Before using the AppSloth Banner component, make sure you've already [set up AppSloth](/quickstart) in your project.
+
+## Adding the Banner Component
+
+The AppSloth Banner component allows you to display important messages to your users across your application. These banners can be informational alerts, announcements, or error notifications.
+
+Adding the Banner component to your application is simple:
+
+<Tabs>
+  <Tab title="Next.js App Router">
+    ```jsx
+    // app/layout.js or app/layout.tsx
+    import { AppSlothProvider } from 'appsloth/provider';
+    import { Banner } from 'appsloth/banner';
+    
+    export default function RootLayout({ children }) {
+      return (
+        <html lang="en">
+          <body>
+            <AppSlothProvider 
+              clientId={process.env.NEXT_PUBLIC_APPSLOTH_CLIENT_ID}
+              userEmail="user@example.com"
+              customerId="project-123"
+            >
+              <main className="flex w-full flex-col">
+                <Banner />
+                {children}
+              </main>
+            </AppSlothProvider>
+          </body>
+        </html>
+      );
+    }
+    ```
+  </Tab>
+  <Tab title="Next.js Pages Router">
+    ```jsx
+    // pages/_app.js or pages/_app.tsx
+    import { AppSlothProvider } from 'appsloth/provider';
+    import { Banner } from 'appsloth/banner';
+    
+    function MyApp({ Component, pageProps }) {
+      return (
+        <AppSlothProvider 
+          clientId={process.env.NEXT_PUBLIC_APPSLOTH_CLIENT_ID}
+          userEmail="user@example.com"
+          customerId="project-123"
+        >
+          <main className="flex w-full flex-col">
+            <Banner />
+            <Component {...pageProps} />
+          </main>
+        </AppSlothProvider>
+      );
+    }
+    
+    export default MyApp;
+    ```
+  </Tab>
+  <Tab title="React">
+    ```jsx
+    // src/App.jsx or src/App.tsx
+    import { AppSlothProvider } from 'appsloth/provider';
+    import { Banner } from 'appsloth/banner';
+    
+    function App() {
+      return (
+        <AppSlothProvider 
+          clientId={process.env.APPSLOTH_CLIENT_ID}
+          userEmail="user@example.com"
+          customerId="project-123"
+        >
+          <main className="flex w-full flex-col">
+            <Banner />
+            <YourApp />
+          </main>
+        </AppSlothProvider>
+      );
+    }
+    
+    export default App;
+    ```
+  </Tab>
+</Tabs>
+
+<Note>
+  Position your Banner component strategically for optimal user visibility. The
+  most common placement is at the top of your application, just above the
+  navigation bar.
+</Note>
+
+## How It Works
+
+The Banner component provides a simple yet powerful way to display messages to your users:
+
+1. **Automatic Configuration**: The component automatically fetches banner configurations from AppSloth's servers
+2. **Smart Display**: The banner remains hidden unless there's an active banner configured for the current page
+3. **Path-Based Display**: Banners only appear on the paths you specify in the dashboard
+4. **User Interaction**: If a link is provided, users can click on the banner to navigate to the specified URL
+5. **Multiple Variants**: Choose between different styles (info, error) to match the type of message
+
+```jsx
+import { Banner } from 'appsloth/banner';
+
+// The simplest implementation - the component handles everything automatically
+<Banner />
+
+// You can also add it to a specific section of your layout
+<main className="flex w-full flex-col">
+  <Banner />
+  <div className="flex w-full justify-end px-12 py-1">
+    {/* Your content */}
+  </div>
+</main>
+```
+
+## Creating Banners from the Dashboard
+
+Instead of hardcoding banner configurations in your code, AppSloth allows you to create and manage banners directly from the dashboard:
+
+1. **Navigate to Banners**: Log into your [AppSloth Dashboard](https://dashboard.appsloth.com) and go to the "Banners" section
+2. **Create New Banner**: Click on the "Create Banner" button
+3. **Configure Banner**: Set up your banner with the following options:
+   - **Message**: The text to display in the banner
+   - **Variant**: Choose between "info" (blue) or "error" (red) styling
+   - **Link**: Optional URL for when users click the banner
+   - **Path Rules**: Configure where the banner should appear:
+     - **Allow List**: Paths where the banner should be shown
+     - **Deny List**: Paths where the banner should be hidden
+
+This dashboard approach gives you several advantages:
+
+- Create, update, or remove banners without deploying code changes
+- Instantly publish banners across your application
+- A/B test different banner messages to optimize effectiveness
+
+<img
+  src="/images/banner-dashboard.png"
+  alt="AppSloth Banner Dashboard"
+  className="rounded-lg border border-zinc-200 dark:border-zinc-700"
+/>
+
+## Path-Based Display
+
+The Banner component intelligently handles path-based display rules:
+
+- **allowedPaths**: Show the banner only on these paths (array or comma-separated string)
+- **excludedPaths**: Hide the banner on these paths (array or comma-separated string)
+- **Path Patterns**: Supports both exact paths and regular expression patterns
+- **Default Behavior**:
+  - If no paths are specified, the banner shows on all pages
+  - If only `allowedPaths` is specified, the banner shows only on those paths
+  - If only `excludedPaths` is specified, the banner shows on all paths except those
+  - If both are specified, `excludedPaths` takes precedence over `allowedPaths`
+
+All of these rules can be configured directly from the AppSloth dashboard without touching your code.
+
+## Customization
+
+The Banner component accepts a few props for customizing its appearance:
+
+| Prop                 | Type              | Default | Description                                                 |
+| -------------------- | ----------------- | ------- | ----------------------------------------------------------- |
+| `containerClassName` | string            | ""      | Class name for the container element that wraps all banners |
+| `bannerClassName`    | string            | ""      | Class name applied to each individual banner                |
+| `variant`            | "info" \| "error" | "info"  | Default variant style for all banners                       |
+| `variantStyles`      | Object            | -       | Custom styles for different variants to override defaults   |
+
+### Custom Styling Example
+
+```jsx
+<Banner
+  containerClassName="mt-4 sticky top-0 z-50"
+  bannerClassName="text-sm font-medium"
+  variant="info"
+  variantStyles={{
+    info: "bg-blue-100 text-blue-800 border-blue-200",
+    error: "bg-red-100 text-red-800 border-red-200",
+  }}
+/>
+```
+
+You can override these styles partially or completely using the `variantStyles` prop.
+
+## Using the BannerComponent Directly
+
+For more advanced use cases, you can also use the `BannerComponent` directly:
+
+```jsx
+import { BannerComponent } from "appsloth/banner";
+
+// Static banner message
+<BannerComponent
+  message="Important announcement"
+  variant="info"
+  link="/learn-more"
+  allowedPaths={["/dashboard", "/settings"]}
+/>;
+```
+
+The `BannerComponent` accepts these props:
+
+| Prop            | Type               | Default    | Description                          |
+| --------------- | ------------------ | ---------- | ------------------------------------ |
+| `message`       | string             | _Required_ | The message to display in the banner |
+| `variant`       | "info" \| "error"  | "info"     | Styling variant for the banner       |
+| `className`     | string             | ""         | Additional CSS classes for styling   |
+| `link`          | string             | undefined  | URL to navigate to when clicked      |
+| `allowedPaths`  | string[] \| string | undefined  | Paths on which to show the banner    |
+| `excludedPaths` | string[] \| string | undefined  | Paths on which to hide the banner    |
+| `variantStyles` | Object             | -          | Custom styles for different variants |
+
+## Next Steps
+
+Now that you've added AppSloth Banners to your application, explore more features:
+
+<CardGroup>
+  <Card title="A/B Testing" icon="flask" href="/features/ab-testing">
+    Learn how to test different banner messages and their effectiveness.
+  </Card>
+  <Card
+    title="Advanced Customization"
+    icon="paint-brush"
+    href="/customization/components"
+  >
+    Deeply customize AppSloth components to match your brand.
+  </Card>
+  <Card title="User Segmentation" icon="users" href="/analytics/segmentation">
+    Target banners to specific user segments.
+  </Card>
+  <Card title="Internationalization" icon="globe" href="/customization/i18n">
+    Translate banners for international audiences.
+  </Card>
+</CardGroup>
