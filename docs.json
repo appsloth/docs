@@ -28,19 +28,7 @@
               "features/banners",
               "features/feedback",
               "features/inbox",
-              "features/retention-modal",
-              "features/integrations",
-              "features/status-page",
-              "features/testimonials"
-            ]
-          },
-          {
-            "group": "SDK",
-            "pages": [
-              "sdk/introduction",
-              "sdk/events",
-              "sdk/notification",
-              "sdk/integrations"
+              "features/retention-modal"
             ]
           }
         ]
